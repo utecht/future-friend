@@ -1,0 +1,6 @@
+{{episodes.length}}
+<ul>
+    {% for episode in episodes %}
+    <li><a href="{% url 'episode_lines' episode.id %}">{{episode}}</a></li>
+    {% endfor %}
+</ul>
