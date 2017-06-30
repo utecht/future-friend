@@ -36,14 +36,47 @@ def create_media(request, id, file_format):
     font_size = int((28 / len(max(sub.line.split('\n'), key=len))) * 50)
     if font_size > 50:
         font_size = 50
-    command = ' '.join(['ffmpeg',
-                '-y',
-                '-ss', sub.start,
-                '-i', '"{}"'.format(sub.episode.episode_file),
-                '-to', sub.duration,
-                '-strict', '-2',
-                '-vf', 'drawtext="fontfile=/usr/share/fonts/TTF/impact.ttf:textfile={}:fontcolor=white:fontsize={}:x=(w-text_w)/2:y=((h*1.75)-text_h)/2:borderw=3"'.format(text_file, font_size),
-                '"{}{}.{}"'.format(settings.MEDIA_ROOT, name, file_format)])
+    if file_format == 'not_gif':
+        args = []
+        args.append('ffmpeg')
+        args.append('-y')
+        args.append('-ss')
+        args.append(sub.start)
+        args.append('-t')
+        args.append(sub.duration)
+        args.append('-i')
+        args.append('"{}"'.format(sub.episode.episode_file))
+        args.append('-vf')
+        args.append("fps=15,palettegen")
+        args.append('{}{}_palette.png'.format(settings.MEDIA_ROOT, name))
+        command = ' '.join(args)
+        p = subprocess.Popen(command, shell=True)
+        p.wait()
+
+    args = []
+    args.append('ffmpeg')
+    args.append('-y')
+    args.append('-ss')
+    args.append(sub.start)
+    args.append('-t')
+    args.append(sub.duration)
+    args.append('-i')
+    args.append('"{}"'.format(sub.episode.episode_file))
+    if file_format == 'not_gif':
+        args.append('-i')
+        args.append('"{}{}_palette.png"'.format(settings.MEDIA_ROOT, name))
+    if file_format == 'webm':
+        args.append('-strict')
+        args.append('-2')
+    if file_format == 'not_gif':
+        args.append('-filter_complex')
+        args.append("\"fps=15 [x]; [x][1:v] paletteuse,drawtext='fontfile=/usr/share/fonts/TTF/impact.ttf:textfile={}:fontcolor=white:fontsize={}:x=(w-text_w)/2:y=((h*1.75)-text_h)/2:borderw=3'\"".format(text_file, font_size))
+    else:
+        args.append('-vf')
+        args.append('drawtext="fontfile=/usr/share/fonts/TTF/impact.ttf:textfile={}:fontcolor=white:fontsize={}:x=(w-text_w)/2:y=((h*1.75)-text_h)/2:borderw=3"'.format(text_file, font_size))
+    args.append('"{}{}.{}"'.format(settings.MEDIA_ROOT, name, file_format))
+    command = ' '.join(args)
+    print(command)
     p = subprocess.Popen(command, shell=True)
     p.wait()
     return redirect('{}{}.{}'.format(settings.MEDIA_URL, name, file_format))
