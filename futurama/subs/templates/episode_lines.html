@@ -27,6 +27,10 @@
             <td><a href="{% url 'create_media' line.id 'webm'%}">[webm]</a></td>
             <td><a href="{% url 'create_media' line.id 'mp4'%}">[mp4]</a></td>
             <td><a href="{% url 'create_media' line.id 'gif'%}">[gif]</a></td>
+	    {% else %}
+	    <td></td>
+	    <td></td>
+	    <td></td>
             {% endif %}
 	    <td><a href="/admin/subs/sub/{{line.id}}/change/">[admin]</a></td>
 	    <td>{{line.start}} - {{line.end}} ({{line.duration}})</td>

@@ -36,7 +36,7 @@ def create_media(request, id, file_format):
     font_size = int((28 / len(max(sub.line.split('\n'), key=len))) * 50)
     if font_size > 50:
         font_size = 50
-    if file_format == 'not_gif':
+    if file_format == 'bgif':
         args = []
         args.append('ffmpeg')
         args.append('-y')
@@ -62,15 +62,16 @@ def create_media(request, id, file_format):
     args.append(sub.duration)
     args.append('-i')
     args.append('"{}"'.format(sub.episode.episode_file))
-    if file_format == 'not_gif':
+    if file_format == 'bgif':
         args.append('-i')
         args.append('"{}{}_palette.png"'.format(settings.MEDIA_ROOT, name))
     if file_format == 'webm':
         args.append('-strict')
         args.append('-2')
-    if file_format == 'not_gif':
+    if file_format == 'bgif':
         args.append('-filter_complex')
         args.append("\"fps=15 [x]; [x][1:v] paletteuse,drawtext='fontfile=/usr/share/fonts/TTF/impact.ttf:textfile={}:fontcolor=white:fontsize={}:x=(w-text_w)/2:y=((h*1.75)-text_h)/2:borderw=3'\"".format(text_file, font_size))
+        file_format = 'gif'
     else:
         args.append('-vf')
         args.append('drawtext="fontfile=/usr/share/fonts/TTF/impact.ttf:textfile={}:fontcolor=white:fontsize={}:x=(w-text_w)/2:y=((h*1.75)-text_h)/2:borderw=3"'.format(text_file, font_size))
