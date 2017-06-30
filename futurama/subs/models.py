@@ -12,8 +12,8 @@ class Episode(models.Model):
 
 class Sub(models.Model):
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE, related_name='sub')
-    line = models.CharField(max_length=500)
-    line_formatted = models.CharField(max_length=500)
+    line = models.TextField()
+    line_formatted = models.TextField()
     index = models.IntegerField()
     duration = models.CharField(max_length=20)
     start = models.CharField(max_length=20)

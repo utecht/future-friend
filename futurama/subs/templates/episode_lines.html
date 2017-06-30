@@ -7,6 +7,7 @@
             <th>webm</th>
             <th>mp4</th>
             <th>gif</th>
+	    <th>admin</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
             <td><a href="{% url 'create_media' line.id 'mp4'%}">[mp4]</a></td>
             <td><a href="{% url 'create_media' line.id 'gif'%}">[gif]</a></td>
             {% endif %}
+	    <td><a href="/admin/subs/sub/{{line.id}}/change/">[admin]</a></td>
         </tr>
         {% endfor %}
     </tbody>
