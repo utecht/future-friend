@@ -18,7 +18,7 @@
         {% for line in lines %}
 	<tr id={{line.id}}>
 	    <td><a href="{% url 'episode_lines' line.episode.id %}#{{line.id}}">
-	    	S{{line.episode.season}}E{{line.episode.num}}
+	    	S{{line.episode.season}}E{{line.episode.number|stringformat:"02d"}}
 	    </a></td>
             <td>{{line.line}}</td>
             <td>{{line.duration}}</td>
