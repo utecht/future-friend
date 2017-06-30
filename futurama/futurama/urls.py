@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^$', episode_index, name='index'),
     url(r'^episode/(?P<id>[0-9]+)$', episode_lines, name='episode_lines'),
     url(r'^create/(?P<id>[0-9]+)/(?P<file_format>.+)$', create_media, name='create_media'),
+    url(r'^search/$', line_search, name='line_search'),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

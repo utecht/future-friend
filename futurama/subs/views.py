@@ -15,6 +15,14 @@ def episode_lines(request, id):
     return render(request, 'episode_lines.html', {'episode': episode,
                                                   'lines': lines})
 
+def line_search(request):
+    try:
+        search = request.POST['search']
+        lines = Sub.objects.filter(line__icontains=search)
+        return render(request, 'episode_lines.html', {'lines': lines})
+    except:
+        return redirect(episode_index)
+
 def write_linefile(sub):
     file_name = "{}{}".format(settings.MEDIA_ROOT, sub.id)
     with open(file_name, 'w') as f:

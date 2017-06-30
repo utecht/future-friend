@@ -1,7 +1,11 @@
-{{episode}} <a href="{% url 'index' %}">Episode List</a>
+<a href="{% url 'index' %}">Episode List</a>
+{% if episode %}
+<h2>{{episode}}</h2>
+{% endif %}
 <table>
     <thead>
         <tr>
+	    <th>Episode</th>
             <th>Line</th>
             <th>Duration</th>
             <th>webm</th>
@@ -12,10 +16,13 @@
     </thead>
     <tbody>
         {% for line in lines %}
-        <tr>
+	<tr id={{line.id}}>
+	    <td><a href="{% url 'episode_lines' line.episode.id %}#{{line.id}}">
+	    	S{{line.episode.season}}E{{line.episode.num}}
+	    </a></td>
             <td>{{line.line}}</td>
             <td>{{line.duration}}</td>
-            {% if episode.episode_file %}
+            {% if line.episode.episode_file %}
             <td><a href="{% url 'create_media' line.id 'webm'%}">[webm]</a></td>
             <td><a href="{% url 'create_media' line.id 'mp4'%}">[mp4]</a></td>
             <td><a href="{% url 'create_media' line.id 'gif'%}">[gif]</a></td>
