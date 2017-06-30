@@ -25,7 +25,7 @@ SECRET_KEY = 'qr%a+f+ko)t3p9)#plqcoq_#jky+6jem!cv!orn%@hjbgs3^j*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '144.30.108.74']
+ALLOWED_HOSTS = ['localhost', 'bastet.moe']
 
 
 # Application definition
@@ -120,4 +120,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/Users/utecht/Downloads/futurama/futurama/media/'
+MEDIA_ROOT = '/home/joseph/future-friend/futurama/media/'
