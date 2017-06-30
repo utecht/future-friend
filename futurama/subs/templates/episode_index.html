@@ -1,12 +1,20 @@
-<form action="{% url 'line_search' %}" method="post">
-	{% csrf_token %}
-	<label for="search">Line Search</label>
-	<input type="text" name="search" />
-	<input type="submit" value="Search" />
-</form>
-	
-<ul>
-    {% for episode in episodes %}
-    <li><a href="{% url 'episode_lines' episode.id %}">{{episode}}</a></li>
-    {% endfor %}
-</ul>
+<html>
+	<head>
+		<title>Future Friend</title>
+	</head>
+	<body>
+		<form action="{% url 'line_search' %}" method="post">
+			{% csrf_token %}
+			<label for="search">Line Search</label>
+			<input type="text" name="search" />
+			<input type="submit" value="Search" />
+		</form>
+			
+		<ul>
+		    {% for episode in episodes %}
+		    <li><a href="{% url 'episode_lines' episode.id %}">{{episode}}</a></li>
+		    {% endfor %}
+		</ul>
+	</body>
+</html>
+
