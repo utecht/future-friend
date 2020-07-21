@@ -3,6 +3,7 @@ from django.conf import settings
 from subs.models import *
 import subprocess
 import re
+import os.path
 
 # Create your views here.
 def episode_index(request):
@@ -34,6 +35,9 @@ def create_media(request, id, file_format):
     name = '{}x{}-{}'.format(sub.episode.season, sub.episode.number, sub.index)
     text_file = write_linefile(sub)
     font_size = int((28 / len(max(sub.line.split('\n'), key=len))) * 50)
+    file_path = '{}{}.{}'.format(settings.MEDIA_ROOT, name, file_format)
+    if os.path.isfile(file_path):
+        return redirect('{}{}.{}'.format(settings.MEDIA_URL, name, file_format))
     if font_size > 50:
         font_size = 50
     if file_format == 'gif':
